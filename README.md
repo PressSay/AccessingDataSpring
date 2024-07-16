@@ -83,7 +83,7 @@ http://localhost:8080/authors/1/books
 http://localhost:8080/libraries/1/addresss
 ```
 
-- Để hiểu hơn về video bên trên hãy vào **src/main/java/com/example/accessingdata/models/library.java**.
+- Để hiểu hơn về **api của adress** bên trên hãy vào **src/main/java/com/example/accessingdata/models/library.java**.
 - Ta hoàn toàn có thể điều chỉnh path address hãy xem dòng 28.
 
 
