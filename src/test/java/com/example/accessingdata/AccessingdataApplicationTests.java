@@ -51,11 +51,15 @@ class AccessingdataApplicationTests {
 		Address address = new Address("Main street, nr 1");
 		template.postForEntity(ADDRESS_ENDPOINT, address, Address.class);
 
+
+		// String libraryAddressUrl = "libraryAddress";
+		String libraryAddressUrl = "address";
+
 		HttpHeaders requestHeaders = new HttpHeaders();
 		requestHeaders.add("Content-type", "text/uri-list");
 		HttpEntity<String> httpEntity
 			= new HttpEntity<>(ADDRESS_ENDPOINT + "/1", requestHeaders);
-		template.exchange(LIBRARY_ENDPOINT + "/1/libraryAddress",
+		template.exchange(LIBRARY_ENDPOINT + "/1/" + libraryAddressUrl,
 			HttpMethod.PUT, httpEntity, String.class);
 		
 		URI uir;

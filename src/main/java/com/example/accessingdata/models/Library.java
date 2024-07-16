@@ -3,7 +3,7 @@ package com.example.accessingdata.models;
 
 import java.util.List;
 
-import org.springframework.data.rest.core.annotation.RestResource;
+// import org.springframework.data.rest.core.annotation.RestResource;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -25,7 +25,7 @@ public class Library {
 
     @OneToOne
     @JoinColumn(name = "address_id")
-    @RestResource(path = "libraryAddress", rel = "address")
+    // @RestResource(path = "libraryAddress", rel = "address")
     private Address address;
 
     @OneToMany(mappedBy = "library")
