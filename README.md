@@ -15,9 +15,6 @@ server:
   port: 8080
 ```
 
-server:
-  port: 8080
-
 ## **Testing**
 
 ### **Run command:**
