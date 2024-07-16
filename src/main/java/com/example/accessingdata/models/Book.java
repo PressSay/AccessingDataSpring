@@ -45,5 +45,6 @@ public class Book {
         this.authors = authors;
     }
 
-    public Book() {}
+    public Book() {
+    }
 }

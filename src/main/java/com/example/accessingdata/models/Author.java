@@ -2,7 +2,6 @@ package com.example.accessingdata.models;
 
 import java.util.List;
 
-
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -18,14 +17,12 @@ public class Author {
     @Id
     @GeneratedValue
     private long id;
-    
+
     @Column(name = "name", nullable = false)
     private String name;
 
     @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "book_author",
-        joinColumns = @JoinColumn(name = "book_id", referencedColumnName = "id"),
-        inverseJoinColumns = @JoinColumn(name = "author_id", referencedColumnName = "id"))
+    @JoinTable(name = "book_author", joinColumns = @JoinColumn(name = "book_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "author_id", referencedColumnName = "id"))
     private List<Book> books;
 
     public void setName(String name) {
@@ -46,5 +43,6 @@ public class Author {
         this.books = books;
     }
 
-    public Author() {}
+    public Author() {
+    }
 }

@@ -1,6 +1,5 @@
 package com.example.accessingdata.models;
 
-
 import java.util.List;
 
 // import org.springframework.data.rest.core.annotation.RestResource;
@@ -15,7 +14,7 @@ import jakarta.persistence.OneToOne;
 
 @Entity
 public class Library {
-    
+
     @Id
     @GeneratedValue
     private long id;
@@ -33,9 +32,9 @@ public class Library {
 
     public String toString() {
         return String.format(
-            "Customer[id=%d, location='%s']",
-            id, name);
-      }
+                "Customer[id=%d, location='%s']",
+                id, name);
+    }
 
     public void setName(String name) {
         this.name = name;
@@ -56,5 +55,6 @@ public class Library {
         this.books = books;
     }
 
-    public Library() {}
+    public Library() {
+    }
 }

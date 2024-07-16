@@ -23,11 +23,11 @@ public class Address {
     }
 
     @Override
-  public String toString() {
-    return String.format(
-        "Customer[id=%d, location='%s']",
-        id, location);
-  }
+    public String toString() {
+        return String.format(
+                "Customer[id=%d, location='%s']",
+                id, location);
+    }
 
     public String getLocation() {
         return this.location;
@@ -43,5 +43,6 @@ public class Address {
         this.library = library;
     }
 
-    public Address() {}
+    public Address() {
+    }
 }

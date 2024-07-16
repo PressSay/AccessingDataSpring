@@ -28,19 +28,17 @@ import com.example.accessingdata.models.Library;
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = WebEnvironment.DEFINED_PORT)
 class AccessingdataApplicationTests {
-	
+
 	@Autowired
 	private TestRestTemplate template;
 
 	private static String BOOK_ENDPOINT = "http://localhost:8080/books";
-    private static String AUTHOR_ENDPOINT = "http://localhost:8080/authors";
-    private static String ADDRESS_ENDPOINT = "http://localhost:8080/addresses";
-    private static String LIBRARY_ENDPOINT = "http://localhost:8080/libraries";
+	private static String AUTHOR_ENDPOINT = "http://localhost:8080/authors";
+	private static String ADDRESS_ENDPOINT = "http://localhost:8080/addresses";
+	private static String LIBRARY_ENDPOINT = "http://localhost:8080/libraries";
 
 	private static String LIBRARY_NAME = "My Library";
-    private static String AUTHOR_NAME = "George Orwell";
-
-	
+	private static String AUTHOR_NAME = "George Orwell";
 
 	@SuppressWarnings("null")
 	@Test
@@ -51,24 +49,21 @@ class AccessingdataApplicationTests {
 		Address address = new Address("Main street, nr 1");
 		template.postForEntity(ADDRESS_ENDPOINT, address, Address.class);
 
-
 		// String libraryAddressUrl = "libraryAddress";
 		String libraryAddressUrl = "address";
 
 		HttpHeaders requestHeaders = new HttpHeaders();
 		requestHeaders.add("Content-type", "text/uri-list");
-		HttpEntity<String> httpEntity
-			= new HttpEntity<>(ADDRESS_ENDPOINT + "/1", requestHeaders);
+		HttpEntity<String> httpEntity = new HttpEntity<>(ADDRESS_ENDPOINT + "/1", requestHeaders);
 		template.exchange(LIBRARY_ENDPOINT + "/1/" + libraryAddressUrl,
-			HttpMethod.PUT, httpEntity, String.class);
-		
+				HttpMethod.PUT, httpEntity, String.class);
+
 		URI uir;
 		try {
-			uir = new URI(ADDRESS_ENDPOINT+ "/1/library");
-			ResponseEntity<Library> libraryGetResponse
-				= template.getForEntity(uir, Library.class);
+			uir = new URI(ADDRESS_ENDPOINT + "/1/library");
+			ResponseEntity<Library> libraryGetResponse = template.getForEntity(uir, Library.class);
 			assertEquals(LIBRARY_NAME,
-				libraryGetResponse.getBody().getName(), "library is incorrect");
+					libraryGetResponse.getBody().getName(), "library is incorrect");
 		} catch (URISyntaxException e) {
 			e.printStackTrace();
 		}
@@ -84,23 +79,21 @@ class AccessingdataApplicationTests {
 		template.postForEntity(BOOK_ENDPOINT, book2, Book.class);
 
 		HttpHeaders requestHeaders = new HttpHeaders();
-		requestHeaders.add("Content-Type", "text/uri-list");    
-		HttpEntity<String> bookHttpEntity 
-			= new HttpEntity<>(LIBRARY_ENDPOINT + "/1", requestHeaders);
+		requestHeaders.add("Content-Type", "text/uri-list");
+		HttpEntity<String> bookHttpEntity = new HttpEntity<>(LIBRARY_ENDPOINT + "/1", requestHeaders);
 
-		template.exchange(BOOK_ENDPOINT + "/1/library", 
-			HttpMethod.PUT, bookHttpEntity, String.class);
-		template.exchange(BOOK_ENDPOINT + "/2/library", 
-			HttpMethod.PUT, bookHttpEntity, String.class);
+		template.exchange(BOOK_ENDPOINT + "/1/library",
+				HttpMethod.PUT, bookHttpEntity, String.class);
+		template.exchange(BOOK_ENDPOINT + "/2/library",
+				HttpMethod.PUT, bookHttpEntity, String.class);
 
 		URI uri;
 		try {
 			uri = new URI(BOOK_ENDPOINT + "/1/library");
-			ResponseEntity<Library> libraryGetResponse = 
-				template.getForEntity(uri, Library.class);
+			ResponseEntity<Library> libraryGetResponse = template.getForEntity(uri, Library.class);
 			try {
-				assertEquals(LIBRARY_NAME, 
-					libraryGetResponse.getBody().getName(), "library is incorrect");
+				assertEquals(LIBRARY_NAME,
+						libraryGetResponse.getBody().getName(), "library is incorrect");
 			} catch (java.lang.NullPointerException e) {
 				e.printStackTrace();
 			}
@@ -115,8 +108,7 @@ class AccessingdataApplicationTests {
 		Author author1 = new Author(AUTHOR_NAME);
 		template.postForEntity(AUTHOR_ENDPOINT, author1, Author.class);
 		try {
-			ResponseEntity<Author> authorGetResponse = 
-					template.getForEntity(AUTHOR_ENDPOINT + "/1", Author.class);
+			ResponseEntity<Author> authorGetResponse = template.getForEntity(AUTHOR_ENDPOINT + "/1", Author.class);
 		} catch (java.lang.NullPointerException e) {
 			e.printStackTrace();
 		}
@@ -133,17 +125,17 @@ class AccessingdataApplicationTests {
 		HttpHeaders requestHeaders = new HttpHeaders();
 		requestHeaders.add("Content-type", "text/uri-list");
 		HttpEntity<String> httpEntity = new HttpEntity<>(
-		BOOK_ENDPOINT + "/3\n" + BOOK_ENDPOINT + "/4", requestHeaders);
-		template.exchange(AUTHOR_ENDPOINT + "/1/books", 
-			HttpMethod.PUT, httpEntity, String.class);
+				BOOK_ENDPOINT + "/3\n" + BOOK_ENDPOINT + "/4", requestHeaders);
+		template.exchange(AUTHOR_ENDPOINT + "/1/books",
+				HttpMethod.PUT, httpEntity, String.class);
 
 		try {
 			String jsonResponse = template
-				.getForObject(BOOK_ENDPOINT + "/1/authors", String.class);
+					.getForObject(BOOK_ENDPOINT + "/1/authors", String.class);
 			JSONObject jsonObj = new JSONObject(jsonResponse).getJSONObject("_embedded");
 			JSONArray jsonArray = jsonObj.getJSONArray("authors");
-			assertEquals(AUTHOR_NAME, 
-				jsonArray.getJSONObject(0).getString("name"), "author is incorrect");
+			assertEquals(AUTHOR_NAME,
+					jsonArray.getJSONObject(0).getString("name"), "author is incorrect");
 		} catch (JSONException | java.lang.NullPointerException e) {
 			e.printStackTrace();
 		}
