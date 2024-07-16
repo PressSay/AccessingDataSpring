@@ -59,6 +59,18 @@ http://localhost:8080/addresses
 http://localhost:8080/libraries
 ```
 
+### Muốn lấy danh sách thực thể books ta sử dụng api sau:
+
+```
+http://localhost:8080/books
+```
+
+### Muốn lấy một thực thể books có id=1 ta sử dụng api sau:
+
+```
+http://localhost:8080/books/1
+```
+
 ### Muốn lấy một thực thể phụ thuộc books trong author có id=1 ta sử dụng api sau:
 
 ```
