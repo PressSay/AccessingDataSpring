@@ -34,6 +34,8 @@ server:
 gradlew.bat test
 ```
 
+*Note: When you finish testing, you must drop your database to make sure everything is normal before running the bootrun*
+
 ## **BootRun**
 
 #### Linux
