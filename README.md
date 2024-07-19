@@ -50,7 +50,7 @@ gradlew.bat bootrun
 <br />
 <br />
 
-# Danh sách **api** resources
+# List **api** resources
 
 ```
 http://localhost:8080/books
@@ -59,48 +59,48 @@ http://localhost:8080/addresses
 http://localhost:8080/libraries
 ```
 
-### Muốn lấy danh sách thực thể books ta sử dụng api sau:
+To get the list of books entity, we use the following api:
 
 ```
 http://localhost:8080/books
 ```
 
-### Muốn lấy một thực thể books có id=1 ta sử dụng api sau:
+To get a books entity with **id=1**, we use the following api:
 
 ```
 http://localhost:8080/books/1
 ```
 
-### Muốn lấy một thực thể phụ thuộc books trong author có id=1 ta sử dụng api sau:
+To get a dependent entity books in **author with id=1**, we use the following api:
 
 ```
 http://localhost:8080/authors/1/books
 ```
 
-### Muốn lấy thực thể address từ library có id=1 ta sử dụng api sau:
+To get the address entity from the **library with id=1**, we use the following api:
 
 ```
 http://localhost:8080/libraries/1/addresss
 ```
 
-- Để hiểu hơn về `api của adress` bên trên hãy vào **src/main/java/com/example/accessingdata/models/library.java**.
-- Ta hoàn toàn có thể điều chỉnh path address hãy xem dòng 28.
+- To better understand the `addresses api` above, go to **src/main/java/com/example/accessingdata/models/library.java**.
+- We can completely adjust the **path of address**, see line 28.
 
 
 <br />
 <br />
 
-# Sử dụng Curl để get post put
+# Use Curl to ( GET, POST, PUT, DELETE )
 
-- Những câu lệnh test này đã được gom gọn trong file: `src/test/java/com/example/accessingdata/AccessingdataApplicationTest.java`
-
-<br />
-
-## Quan hệ one to one
+- These test commands have been collected in the file: `src/test/java/com/example/accessingdata/AccessingdataApplicationTest.java`
 
 <br />
 
-Sử dụng curl để `post` một thực thể library mới lên server có thuộc tính name="My Library"
+## One to one relationship
+
+<br />
+
+Use curl to `POST` a new library entity to the server with the attribute **"name"="My Library"**
 
 ```
 curl -i -X POST -H "Content-Type:application/json" -d '{"name":"My Library"}' http://localhost:8080/libraries
@@ -108,7 +108,7 @@ curl -i -X POST -H "Content-Type:application/json" -d '{"name":"My Library"}' ht
 
 <br />
 
-Sử dụng curl để `post` một thực thể address mới lên server
+Use curl to `POST` a new address entity to the server
 
 ```
 curl -i -X POST -H "Content-Type:application/json" -d '{"location":"Main Street nr 5"}' http://localhost:8080/addresses
@@ -116,7 +116,7 @@ curl -i -X POST -H "Content-Type:application/json" -d '{"location":"Main Street 
 
 <br />
 
-Sử dụng curl để `tạo association address` với library bằng giao thức `PUT`
+Use curl to **create an address association** with the library using the `PUT` protocol
 
 ```
 curl -i -X PUT -d "http://localhost:8080/addresses/1" -H "Content-Type:text/uri-list" http://localhost:8080/libraries/1/address
@@ -124,7 +124,7 @@ curl -i -X PUT -d "http://localhost:8080/addresses/1" -H "Content-Type:text/uri-
 
 <br />
 
-Sử dụng curl `get` để lấy library từ addresses có id là 1
+Use curl `GET` to get the library from **addresses with id=1**
 
 ```
 curl -i -X GET http://localhost:8080/addresses/1/library
@@ -132,7 +132,7 @@ curl -i -X GET http://localhost:8080/addresses/1/library
 
 <br />
 
-Sử dụng curl `delete` để xóa address association
+Use curl `DELETE` to delete the address association
 
 ```
 curl -i -X DELETE http://localhost:8080/libraries/1/addresss
@@ -140,11 +140,11 @@ curl -i -X DELETE http://localhost:8080/libraries/1/addresss
 
 <br />
 
-## Quan hệ one to many
+## One to many relationship
 
 <br />
 
-Sử dụng curl để `post` một thực thể book mới lên server có thuộc tính title:"Book1"
+Use curl to `POST` a new book entity to the server with the attribute **"title":"Book1"**
 
 ```
 curl -i -X POST -d "{\"title\":\"Book1\"}" -H "Content-Type:application/json" http://localhost:8080/books
@@ -152,7 +152,7 @@ curl -i -X POST -d "{\"title\":\"Book1\"}" -H "Content-Type:application/json" ht
 
 <br />
 
-Sử dụng curl để `put association library` có (name:"My Library" vì http://localhost:8080/libraries/1) cho thực thể "Book1" ở dòng lệnh phía trên
+Use curl to `PUT` **association library** with (name:"My Library" because http://localhost:8080/libraries/1) for entity "Book1" in the command line above
 
 ```
 curl -i -X PUT -H "Content-Type:text/uri-list" -d "http://localhost:8080/libraries/1" http://localhost:8080/books/1/library
@@ -160,7 +160,7 @@ curl -i -X PUT -H "Content-Type:text/uri-list" -d "http://localhost:8080/librari
 
 <br />
 
-Sử dụng curl để `Get` danh sách book từ library id 1
+Use curl to `GET` book list from library id=1
 
 ```
 curl -i -X GET http://localhost:8080/libraries/1/books
@@ -168,7 +168,7 @@ curl -i -X GET http://localhost:8080/libraries/1/books
 
 <br />
 
-Sử dụng curl để `delete association library` có (name:"My Library" vì ta đã ánh xạ chúng ở phía trên)
+Use curl to `DELETE` **association library** with (name:"My Library" because we mapped them above)
 
 ```
 curl -i -X DELETE http://localhost:8080/books/1/library
@@ -176,11 +176,11 @@ curl -i -X DELETE http://localhost:8080/books/1/library
 
 <br />
 
-## Quan hệ many to many
+## Many to many relationship
 
 <br />
 
-Sử dụng curl để `post` một thực thể author có name:"author1"
+Use curl to `POST` an author entity **"named":"author1"**
 
 ```
 curl -i -X POST -H "Content-Type:application/json" -d "{\"name\":\"author1\"}" http://localhost:8080/authors
@@ -188,7 +188,7 @@ curl -i -X POST -H "Content-Type:application/json" -d "{\"name\":\"author1\"}" h
 
 <br />
 
-Sử dụng curl để `post` book2
+Use curl to `POST` book2
 
 ```
 curl -i -X POST -H "Content-Type:application/json" -d "{\"title\":\"Book 2\"}" http://localhost:8080/books
@@ -196,13 +196,13 @@ curl -i -X POST -H "Content-Type:application/json" -d "{\"title\":\"Book 2\"}" h
 
 <br />
 
-Sử dụng curl để `put` association author với book1 và book2
+Use curl to `PUT` author **association with book1 and book2**
 
 ```
 curl -i -X PUT -H "Content-Type:text/uri-list" --data-binary @uris.txt http://localhost:8080/authors/1/books
 ```
 
-- *Chú ý ta cần tạo một file có tên `uris.txt` với nội dung sau:*
+- *Note that we need to create a file named `uris.txt` with the following content:*
 
 ```
 http://localhost:8080/books/1
@@ -211,7 +211,7 @@ http://localhost:8080/books/2
 
 <br />
 
-Sử dụng curl để `get` book từ author id=1
+Use curl to `GET` book from **author id=1**
 
 ```
 curl -i -X GET http://localhost:8080/authors/1/books
